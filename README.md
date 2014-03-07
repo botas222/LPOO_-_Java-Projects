@@ -1,4 +1,4 @@
-LPOO---Java-Projects
+LPOO - Java-Projects
 ====================
 
 Some JAVA Projects
