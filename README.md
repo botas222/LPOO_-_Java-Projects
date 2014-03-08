@@ -13,8 +13,8 @@ First Game:
 
       -Aditional:
       
-          "PDF's Sheets"
-            . This Repos will have some sheets with details about all iterations;
-            
-          "myCode"
-            . It'll have to my files solution for that;
+    "PDF's Sheets"
+        - This Repos will have some sheets with details about all iterations;
+        
+    "myCode"
+        - It'll have to my files solution for that;
