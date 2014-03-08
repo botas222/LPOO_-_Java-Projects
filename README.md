@@ -15,5 +15,5 @@ First Game:
           "PDF's Sheets"
             . This Repos will have some sheets with details about all iterations;
             
-          "Code"
+          "myCode"
             . It'll have to my files solution for that;
