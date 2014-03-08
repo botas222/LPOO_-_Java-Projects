@@ -1,6 +1,8 @@
 LPOO - Java Projects
 ====================
 
+FEUP - MIEIC - 2nd Year - 2nd Semester
+
 Some JAVA Projects
 
 First Game:
