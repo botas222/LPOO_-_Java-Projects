@@ -4,12 +4,11 @@ import java.util.Arrays;
 import java.util.Stack;
 import maze.logic.*;
 
-public class Generator implements MazeBuilder{
+public class Generator implements Builder {
 	
 	private static final char labExit = 'S';
 	private static final char wall = 'X';
-	//private static final char gc = '+';
-	public char b[][];
+	private char b[][];
 	private int boardSize;
 	private boolean visited[][];
 	private int visitedSize;
@@ -19,12 +18,9 @@ public class Generator implements MazeBuilder{
 
 	//
 	
-	public int getBoardSize() {
-		return boardSize;
-	}
-	
 	// for random mode (has a user-specified size, and random positions)
 	public Generator(int s) {
+		
 		boardSize = s;
 		visitedSize = (boardSize-1)/2;
 
@@ -88,6 +84,7 @@ public class Generator implements MazeBuilder{
 
 	// depending on the position of the guide cell, sets the exit place
 	private void defineExit(int side, int x, int y) {
+		
 		switch (side) {
 		case 0: // up
 			exit.setX(Utils.visitedToLab(x));
@@ -113,16 +110,19 @@ public class Generator implements MazeBuilder{
 
 	// marks the guide cell position as visited
 	private void markAsVisited() {
+		
 		visited[guideCell.getY()][guideCell.getX()] = true;		
 	}
 
 	// add guide cell coordinates to stack
 	private void addToStack() {
+		
 		history.add(new Point(guideCell));		
 	}
 
 	// generates a random maze
 	private void generateMaze() {
+		
 		while (!history.isEmpty()) {
 			if (allNeighborsVisited()) {
 				history.pop(); 
@@ -139,6 +139,7 @@ public class Generator implements MazeBuilder{
 
 	// moves the guide cell in the direction 'd', if it is possible
 	private boolean moveGuideCell(Direction d) {
+		
 		// if the cell where we are trying to go has already been visited
 		// the guide cell does not move
 		if (nextCellVisited(d))
@@ -178,6 +179,7 @@ public class Generator implements MazeBuilder{
 	// checks whether all the adjacent cells to the guide cell
 	// have been visited or not
 	private boolean allNeighborsVisited() {
+		
 		for (int i = 0 ; i < 4; ++i) {
 			if (!nextCellVisited(Direction.values()[i])) {
 				return false;
@@ -189,6 +191,7 @@ public class Generator implements MazeBuilder{
 	// checks whether the next cell (in a determined direction) to the guide cell
 	// has already been visited or not
 	private boolean nextCellVisited(Direction direction) {
+		
 		switch (direction) {
 		case UP:
 			if (guideCell.getY() < 1)
@@ -212,7 +215,15 @@ public class Generator implements MazeBuilder{
 		}
 	}
 
-	public char[][] getMaze() {
+	@Override
+	public char[][] getBoard() {
+		
 		return b;
+	}
+
+	@Override
+	public int getBoardSize() {
+
+		return boardSize;
 	}
 }

@@ -1,12 +1,16 @@
 package maze.logic;
-import maze.builder.*;
 
 public class Hero extends Character {
 	
+	private static final long serialVersionUID = 1L;
 	private boolean armed;
 	private boolean killedADragon;
+	private boolean hasEagle = true;
 	
-	public Hero(Point p, MazeBuilder board) {
+	//
+	
+	public Hero(Point p, char[][] board) {
+		
 		this.board = board;
 		dead = false;
 		armed = false;
@@ -15,61 +19,77 @@ public class Hero extends Character {
 		setPosition(new Point(p));
 	}
 
-	public Hero(MazeBuilder board) {
+	public Hero(char[][] board) {
+		
 		this.board = board;
 		dead = false;
 		armed = false;
 		killedADragon = false;
 		symbol = 'H';
 		do {
-			int x = Utils.getRandomInteger(board.getMaze().length - 2) + 1;
-			int y = Utils.getRandomInteger(board.getMaze().length - 2) + 1;
+			int x = Utils.getRandomInteger(board.length - 2) + 1;
+			int y = Utils.getRandomInteger(board.length - 2) + 1;
 			setPostion(x,y);
 
-		} while(board.getMaze()[getY()][getX()] != ' ');
+		} while(board[getY()][getX()] != ' ');
 	}
 
 	public boolean validMove(int dx, int dy, Game thatGame) {
-		if (board.getMaze()[getY() + dy][getX() + dx] == ' ')
+		
+		if (board[getY() + dy][getX() + dx] == ' '
+				|| board[getY() + dy][getX() + dx] == 'd'
+				|| board[getY() + dy][getX() + dx] == 'f'
+				|| board[getY() + dy][getX() + dx] == 'Y')
 			return true;
-		if (board.getMaze()[getY() + dy][getX() + dx] == 'E') {
+		
+		if (board[getY() + dy][getX() + dx] == 'E') {
+			
 			changeSymbol();
 			return true;
 		}
-		if (board.getMaze()[getY() + dy][getX() + dx] == 'S' 
+		
+		if (board[getY() + dy][getX() + dx] == 'S' 
 				&& hasKilledADragon()) {
 			// no need to check if he's armed, couldn't have killed a dragon if he hadn't caught the sword
-			thatGame.endGame();
+			thatGame.end();
 			return true;
 		}
-		if(board.getMaze()[getY() + dy][getX() + dx] == 'd')
-			return true;
-		if(board.getMaze()[getY() + dy][getX() + dx] == 'f')
-			return true;
-		
+
 		return false;
 	}
 
 	public boolean hasKilledADragon() {
+		
 		return killedADragon;
 	}
 
 	public void killDragon() {
+		
 		killedADragon = true;
 	}
 
 	public boolean isArmed() {
+		
 		return armed;
 	}
 
 	public void changeSymbol() {
+
 		symbol = 'A';
 		armed = true;
 	}
 	
-	public void die(MazeBuilder board) {
+	public void die() {
+		
 		dead = true;
 		symbol = '*';
-		board.getMaze()[getPosition().getY()][getPosition().getX()] = ' ';
+	}
+	
+	public boolean hasEagle() {
+		return hasEagle;
+	}
+	
+	public void setEagle(boolean s) {
+		hasEagle = s;
 	}
 }
